@@ -25,19 +25,22 @@ public class Activator extends ComponentActivatorAbstractBase {
      * are done by the ComponentActivatorAbstractBase.
      *
      */
+    /*
     @Override
     public void init() {
     }
+    */
 
     /**
      * Function called when the activator stops just before the cleanup done by
      * ComponentActivatorAbstractBase
      *
      */
+    /*
     @Override
     public void destroy() {
     }
-
+*/
     /**
      * Function that is used to communicate to dependency manager the list of
      * known implementations for services inside a container
@@ -89,13 +92,13 @@ public class Activator extends ComponentActivatorAbstractBase {
     public void configureInstance(Component c, Object imp, String containerName) {
 
         // TODO: configure instance
-    	log.error("container name: {}", containerName);
+    	log.info("Learningswithc activator - container name: {}", containerName);
 
         if (imp.equals(LearningSwitch.class)) {
         	   // export the services
             Dictionary<String, String> props = new Hashtable<String, String>();
-            props.put("salListenerName", "tutorial_L2_forwarding");
-            c.setInterface(new String[] { IListenDataPacket.class.getName() }, props);
+            props.put("salListenerName", "LearningSwitch");
+            c.setInterface(new String[] { IListenDataPacket.class.getName(), ILearningSwitch.class.getName() }, props);
 
             // register dependent modules
             c.add(createContainerServiceDependency(containerName).setService(

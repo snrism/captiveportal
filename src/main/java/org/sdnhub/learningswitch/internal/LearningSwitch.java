@@ -38,7 +38,7 @@ import org.opendaylight.controller.sal.packet.UDP;
 import org.opendaylight.controller.sal.utils.NetUtils;
 import org.opendaylight.controller.switchmanager.ISwitchManager;
 
-public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
+public class LearningSwitch implements IListenDataPacket, ILearningSwitch {
     private Map<UUID, LearningSwitchData> data;
     protected static final Logger logger = LoggerFactory.getLogger(LearningSwitch.class);
 	private IDataPacketService dataPacketService = null;
@@ -47,6 +47,19 @@ public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
 	private Map<Long, NodeConnector> mac_to_port = new HashMap<Long, NodeConnector>();
 	private String function = "hub";
 
+
+    void init() {
+        logger.info("Initializing Simple application");
+        data = new ConcurrentHashMap<UUID, LearningSwitchData>();
+    }
+    void start() {
+        logger.info("Simple application starting");
+    }
+
+    void stop() {
+        logger.info("Simple application stopping");
+    }
+	
 	void setDataPacketService(IDataPacketService s) {
 		this.dataPacketService = s;
 	}
@@ -68,6 +81,8 @@ public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
 		}
 	}
 
+	
+	
 	void setSwitchManager(ISwitchManager s) {
 		logger.debug("SwitchManager set");
 		this.switchManager = s;
@@ -80,8 +95,17 @@ public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
 		}
 	}
 
+	@Override
+	public String toggleSwitchHub() {
+		if (this.function.equals("hub")) {
+			this.function = "switch";
+		} else {
+			this.function = "hub";
+		}
+		return this.function;
+	}
 
-    private void floodPacket(RawPacket inPkt) {
+	private void floodPacket(RawPacket inPkt) {
         NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
         Node incoming_node = incoming_connector.getNode();
         
@@ -179,7 +203,7 @@ public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
             return true;
         }
     }
-   
+  
      @Override
     public UUID createData(LearningSwitchData datum) {
         UUID uuid = UUID.randomUUID();
@@ -205,15 +229,5 @@ public class LearningSwitch implements ILearningSwitch, IListenDataPacket {
         data.remove(uuid);
         return new Status(StatusCode.SUCCESS);
     }
-    void init() {
-        logger.info("Initializing Simple application");
-        data = new ConcurrentHashMap<UUID, LearningSwitchData>();
-    }
-    void start() {
-        logger.info("Simple application starting");
-    }
-
-    void stop() {
-        logger.info("Simple application stopping");
-    }
+    
 }

@@ -26,9 +26,14 @@
           <instructions>
             <Import-Package>
               org.opendaylight.toolkit.web,
-              org.opendaylight.controller.sal.authorization,
               org.opendaylight.controller.sal.core,
               org.opendaylight.controller.sal.utils,
+              org.opendaylight.controller.sal.packet,
+              org.opendaylight.controller.sal.action,
+              org.opendaylight.controller.sal.flowprogrammer,
+              org.opendaylight.controller.sal.match,
+              org.opendaylight.controller.sal.authorization,
+              org.opendaylight.controller.switchmanager,
               javax.annotation,
               javax.naming,
               javax.servlet,

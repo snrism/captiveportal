@@ -12,4 +12,5 @@ public interface ILearningSwitch {
     public Map<UUID, LearningSwitchData> readData();
     public Status updateData(UUID uuid, LearningSwitchData data);
     public Status deleteData(UUID uuid);
+	public String toggleSwitchHub();
 }

@@ -3,6 +3,7 @@ package org.sdnhub.learningswitch.northbound;
 
 import org.sdnhub.learningswitch.ILearningSwitch;
 import org.sdnhub.learningswitch.LearningSwitchData;
+import org.sdnhub.learningswitch.internal.LearningSwitch;
 import org.codehaus.enunciate.jaxrs.StatusCodes;
 import org.codehaus.enunciate.jaxrs.TypeHint;
 import org.opendaylight.controller.sal.utils.ServiceHelper;
@@ -64,7 +65,45 @@ public class AppNorthbound {
     protected String getUserName() {
         return username;
     }
+    /**
+    *
+    * Switch-hub toggle GET REST API call
+    *
+    * @return A response string
+    *
+    * <pre>
+    * Example:
+    *
+    * Request URL:
+    * http://localhost:8080/learningswitch/northbound/toggle
+    *
+    * Response body in XML:
+    * &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+    * Sample Northbound API
+    *
+    * Response body in JSON:
+    * Sample Northbound API
+    * </pre>
+    */
+   @Path("/learningswitch/toggle")
+   @GET
+   @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+   @StatusCodes()   
+   public String toggleSwitchHub() {
+       if (!NorthboundUtils.isAuthorized(getUserName(), "default", Privilege.WRITE, this)) {
+           throw new UnauthorizedException("User is not authorized to perform this operation");
+       }
+       //LearningSwitch simple = (LearningSwitch) ServiceHelper.getInstance(LearningSwitch.class, "default", this);
+       ILearningSwitch simple = (ILearningSwitch) ServiceHelper.getInstance(ILearningSwitch.class, "default", this);
+       if (simple == null) {
+           throw new ServiceUnavailableException("Simple Service " + RestMessages.SERVICEUNAVAILABLE.toString());
+       }
 
+       return simple.toggleSwitchHub();
+   }
+    
+    
+    
     /**
      *
      * Sample GET REST API call
@@ -93,9 +132,8 @@ public class AppNorthbound {
         if (!NorthboundUtils.isAuthorized(getUserName(), "default", Privilege.WRITE, this)) {
             throw new UnauthorizedException("User is not authorized to perform this operation");
         }
-//        ILearningSwitch simple = (ILearningSwitch) ServiceHelper.getGlobalInstance(ILearningSwitch.class, this);
+        //LearningSwitch simple = (LearningSwitch) ServiceHelper.getInstance(LearningSwitch.class, "default", this);
         ILearningSwitch simple = (ILearningSwitch) ServiceHelper.getInstance(ILearningSwitch.class, "default", this);
-        		//getGlobalInstance(ILearningSwitch.class, this);
         if (simple == null) {
             throw new ServiceUnavailableException("Simple Service " + RestMessages.SERVICEUNAVAILABLE.toString());
         }

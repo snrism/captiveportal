@@ -28,10 +28,22 @@ define(
           $(this.el).append($(compiledTemplate).html());
         },
         events : {
-          'click #simpleContainer button' : 'handleSimpleButton',
+       	'click #simpleContainer button' : 'handleSimpleButton',
           'click #simpleTable tbody tr' : 'tableRowClicked'
         },
+        handleSwitchHubToggle : function(evt) {
+        	debugger;
+        	var self = this;
+            var $button = $(evt.currentTarget);
+            if ($button.attr('id') == 'toggleButton') {
+            	$.get( "/learningswitch/northbound/learningswitch/toggle", function( data ) {
+            		  $("#toggleButton").val(data);
+            		});
+            }
+        },
         handleSimpleButton : function(evt) {
+
+        	debugger;
           var self = this;
           var $button = $(evt.currentTarget);
           if ($button.attr('id') == 'simpleButton') {
