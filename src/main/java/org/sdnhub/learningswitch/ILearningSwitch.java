@@ -13,4 +13,6 @@ public interface ILearningSwitch {
     public Status updateData(UUID uuid, LearningSwitchData data);
     public Status deleteData(UUID uuid);
 	public String toggleSwitchHub();
-}
+	public String echo(String echo);
+	
+}	

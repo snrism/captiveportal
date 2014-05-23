@@ -102,6 +102,44 @@ public class AppNorthbound {
        return simple.toggleSwitchHub();
    }
     
+/**
+    *
+    * Switch-hub toggle GET REST API call
+    *
+    * @return A response string
+    *
+    * <pre>
+    * Example:
+    *
+    * Request URL:
+    * http://localhost:8080/learningswitch/northbound/echo/{input}
+    *
+    * Response body in XML:
+    * &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+    * Sample Northbound API
+    *
+    * Response body in JSON:
+    * Sample Northbound API
+    * </pre>
+    */
+   @Path("/echo/{input}")
+   @GET
+   @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+   @StatusCodes()   
+   public String echoTest(@PathParam("input") String input) {
+   
+       if (!NorthboundUtils.isAuthorized(getUserName(), "default", Privilege.WRITE, this)) {
+           throw new UnauthorizedException("User is not authorized to perform this operation");
+       }
+       //LearningSwitch simple = (LearningSwitch) ServiceHelper.getInstance(LearningSwitch.class, "default", this);
+       ILearningSwitch simple = (ILearningSwitch) ServiceHelper.getInstance(ILearningSwitch.class, "default", this);
+       if (simple == null) {
+           throw new ServiceUnavailableException("Simple Service " + RestMessages.SERVICEUNAVAILABLE.toString());
+       }
+
+       return "<xml><output>" + simple.echo( input ) +"</output></xml>";
+   }
+   
     
     
     /**

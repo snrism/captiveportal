@@ -230,4 +230,9 @@ public class LearningSwitch implements IListenDataPacket, ILearningSwitch {
         return new Status(StatusCode.SUCCESS);
     }
     
+	@Override
+	public String echo(String echo){
+		return "Hi " + echo + " from the class";
+	}
+	
 }

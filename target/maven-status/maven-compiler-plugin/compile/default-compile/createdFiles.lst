@@ -1,0 +1,6 @@
+org\sdnhub\learningswitch\northbound\AppNorthbound.class
+org\sdnhub\learningswitch\web\AppWeb.class
+org\sdnhub\learningswitch\ILearningSwitch.class
+org\sdnhub\learningswitch\internal\Activator.class
+org\sdnhub\learningswitch\internal\LearningSwitch.class
+org\sdnhub\learningswitch\LearningSwitchData.class
